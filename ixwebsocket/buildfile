@@ -28,3 +28,8 @@ lib{ixwebsocket}:
 lib{ixwebsocket}: def{ixwebsocket}: include = ($cxx.target.system == 'win32-msvc')
 def{ixwebsocket}: libul{ixwebsocket}
 
+ixwebsocket/hxx{*}:
+{
+    install = include/ixwebsocket/
+    install.subdirs = false
+}
