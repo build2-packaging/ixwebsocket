@@ -1,0 +1,11 @@
+: 1
+name: ixwebsocket
+version: 11.3.2-a.0.z
+summary: websocket and http client and server library
+license: BSD-3-Clause
+description-file: upstream/README.md
+src-url: https://github.com/machinezone/IXWebSocket
+depends: * build2 >= 0.14.0
+depends: * bpkg >= 0.14.0
+depends: libssl ^1.1.1
+depends: libz ^1.2.1100

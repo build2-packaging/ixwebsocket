@@ -1,0 +1,30 @@
+import libs  = libssl%lib{ssl}
+import libs += libz%lib{z}
+
+defines = "-DIXWEBSOCKET_USE_TLS" "-DIXWEBSOCKET_USE_OPEN_SSL" "-DIXWEBSOCKET_USE_ZLIB"
+cxx.poptions += $defines
+cxx.poptions += "-I$src_base"
+
+if ($cxx.target.class == 'windows')
+{
+    if ($cxx.target.system == 'mingw32')
+        cxx.libs += "-lwsock32" "-lws2_32" "-lshlwapi" "-lCrypt32"
+    else
+        cxx.libs += "wsock32.lib" "ws2_32.lib" "shlwapi.lib" "Crypt32.lib"
+}
+else
+    cxx.libs += "-lpthread"
+
+lib{ixwebsocket}: libul{ixwebsocket}: \
+    ixwebsocket/{cxx hxx}{** -IXSocketMbedTLS -IXSocketAppleSSL} \
+    $libs
+
+lib{ixwebsocket}:
+{
+    cxx.export.poptions += $defines
+    cxx.export.poptions += "-I$src_base"
+}
+
+lib{ixwebsocket}: def{ixwebsocket}: include = ($cxx.target.system == 'win32-msvc')
+def{ixwebsocket}: libul{ixwebsocket}
+
